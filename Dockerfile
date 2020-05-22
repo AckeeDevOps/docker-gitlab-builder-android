@@ -7,9 +7,14 @@ RUN apt-get update && apt-get install -y \
     wget
 
 ENV ANDROID_HOME /opt/android-sdk-linux
+
 RUN cd /opt && wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip && \
     unzip -q android-sdk-tools.zip && mkdir -p "$ANDROID_HOME" && mv tools/ "$ANDROID_HOME"/tools/ && \
     rm android-sdk-tools.zip
+
+RUN cd "$ANDROID_HOME" && wget -q https://dl.google.com/android/repository/android-ndk-r21-linux-x86_64.zip -O ndk-bundle.zip && \
+    unzip -q ndk-bundle.zip && mv android-ndk-r21 ndk-bundle && rm -r ndk-bundle.zip
+
 ENV PATH "$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
 
 # Accept licenses before installing components
