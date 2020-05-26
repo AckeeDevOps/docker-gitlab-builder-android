@@ -1,5 +1,7 @@
 FROM debian:stretch
 
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -9,6 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 ENV ANDROID_HOME /opt/android-sdk-linux
 
+# Download Android SDK tools into $ANDROID_HOME
 RUN cd /opt && wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip && \
     unzip -q android-sdk-tools.zip && mkdir -p "$ANDROID_HOME" && mv tools/ "$ANDROID_HOME"/tools/ && \
     rm android-sdk-tools.zip
@@ -21,3 +24,8 @@ ENV PATH "$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platfo
 RUN yes | sdkmanager --licenses
 
 RUN sdkmanager "platform-tools"
+
+# list all platforms, sort them in descending order, take the newest 8 versions and install them
+RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{print $1}' | sort -nr -k2 -t- | head -8)
+# list all build-tools, sort them in descending order and install them
+RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
