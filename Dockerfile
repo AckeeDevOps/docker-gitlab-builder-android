@@ -29,3 +29,12 @@ RUN sdkmanager "platform-tools"
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{print $1}' | sort -nr -k2 -t- | head -8)
 # list all build-tools, sort them in descending order and install them
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
+
+# emulator
+
+# install packages
+RUN sdkmanager "emulator"
+RUN sdkmanager "system-images;android-29;google_apis_playstore;x86"
+
+# create emulator
+RUN echo "no" | avdmanager create avd -n emu_29 -k "system-images;android-29;google_apis_playstore;x86"
