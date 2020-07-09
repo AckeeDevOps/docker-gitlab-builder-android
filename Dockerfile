@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     wget
 
 ENV ANDROID_HOME /opt/android-sdk-linux
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH $PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin
 
 # Download Android SDK tools into $ANDROID_HOME
 RUN cd /opt && wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip && \
@@ -29,3 +31,8 @@ RUN sdkmanager "platform-tools"
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{print $1}' | sort -nr -k2 -t- | head -8)
 # list all build-tools, sort them in descending order and install them
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
+
+# install Appium
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g appium --unsafe-perm=true
