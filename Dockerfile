@@ -36,3 +36,7 @@ RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g appium --unsafe-perm=true
+
+RUN sdkmanager emulator && \
+    sdkmanager "system-images;android-29;google_apis_playstore;x86" && \
+    echo no | avdmanager create avd -n emu_29 -k "system-images;android-29;google_apis_playstore;x86"
