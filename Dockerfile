@@ -5,6 +5,7 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install -y \
     curl \
     git \
+    libgl1-mesa-glx \
     openjdk-8-jdk-headless \
     unzip \
     wget
