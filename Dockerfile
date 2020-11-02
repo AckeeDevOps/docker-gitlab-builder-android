@@ -41,3 +41,14 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
 RUN sdkmanager emulator && \
     sdkmanager "system-images;android-29;google_apis_playstore;x86" && \
     echo no | avdmanager create avd -n emu_29 -k "system-images;android-29;google_apis_playstore;x86"
+
+# install gcloud
+RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-316.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
+    tar xf g.tar.gz && \
+    rm g.tar.gz && \
+    mv google-cloud-sdk /opt/google-cloud-sdk && \
+    /opt/google-cloud-sdk/install.sh -q && \
+    /opt/google-cloud-sdk/bin/gcloud config set component_manager/disable_update_check true
+# add gcloud SDK to path
+ENV PATH="${PATH}:/opt/google-cloud-sdk/bin/"
+
