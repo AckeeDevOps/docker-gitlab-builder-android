@@ -43,7 +43,7 @@ RUN sdkmanager emulator && \
     echo no | avdmanager create avd -n emu_29 -k "system-images;android-29;google_apis_playstore;x86"
 
 # install gcloud
-RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-316.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
+RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-316.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
     tar xf g.tar.gz && \
     rm g.tar.gz && \
     mv google-cloud-sdk /opt/google-cloud-sdk && \
