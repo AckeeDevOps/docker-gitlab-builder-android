@@ -33,15 +33,6 @@ RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{p
 # list all build-tools, sort them in descending order and install them
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
 
-# install Appium
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g appium --unsafe-perm=true
-
-RUN sdkmanager emulator && \
-    sdkmanager "system-images;android-29;google_apis_playstore;x86" && \
-    echo no | avdmanager create avd -n emu_29 -k "system-images;android-29;google_apis_playstore;x86"
-
 # install gcloud
 RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-316.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
     tar xf g.tar.gz && \
