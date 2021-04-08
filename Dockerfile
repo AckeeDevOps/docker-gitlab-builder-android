@@ -6,20 +6,25 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     libgl1-mesa-glx \
-    openjdk-8-jdk-headless \
     unzip \
+    zip \
+    python \
     wget
 
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-ENV PATH $PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin
+RUN curl -s "https://get.sdkman.io" | bash && \
+    source "$HOME/.sdkman/bin/sdkman-init.sh" && \
+    sdk install java 11.0.10-zulu && \
+    sdk use java 11.0.10-zulu
 
-# Download Android SDK tools into $ANDROID_HOME
-RUN cd /opt && wget -q https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -O android-sdk-tools.zip && \
-    unzip -q android-sdk-tools.zip && mkdir -p "$ANDROID_HOME" && mv tools/ "$ANDROID_HOME"/tools/ && \
+ENV JAVA_HOME /root/.sdkman/candidates/java/current
+ENV ANDROID_HOME /opt/android-sdk-linux
+
+# Download Android SDK command line tools into $ANDROID_HOME
+RUN cd /opt && wget -q  https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip -O android-sdk-tools.zip && \
+    unzip -q android-sdk-tools.zip && mkdir -p "$ANDROID_HOME/cmdline-tools/" && mv cmdline-tools latest && mv latest/ "$ANDROID_HOME"/cmdline-tools/ && \
     rm android-sdk-tools.zip
 
-ENV PATH "$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
+ENV PATH "$PATH:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
 
 # Accept licenses before installing components
 # License is valid for all the standard components in versions installed from this file
@@ -34,7 +39,7 @@ RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{p
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
 
 # install gcloud
-RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-316.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
+RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-334.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
     tar xf g.tar.gz && \
     rm g.tar.gz && \
     mv google-cloud-sdk /opt/google-cloud-sdk && \
