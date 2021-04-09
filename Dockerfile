@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     python \
-    wget
+    wget \
+    fontconfig
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     source "$HOME/.sdkman/bin/sdkman-init.sh" && \
