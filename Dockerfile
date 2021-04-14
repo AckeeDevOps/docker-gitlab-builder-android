@@ -19,6 +19,7 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 
 ENV JAVA_HOME /root/.sdkman/candidates/java/current
 ENV ANDROID_HOME /opt/android-sdk-linux
+ENV PATH "$PATH:$JAVA_HOME/bin"
 
 # Download Android SDK command line tools into $ANDROID_HOME
 RUN cd /opt && wget -q  https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip -O android-sdk-tools.zip && \
