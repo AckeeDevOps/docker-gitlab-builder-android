@@ -1,5 +1,9 @@
 FROM debian:stretch
 
+LABEL tag="ackee-gitlab" \
+      author="Ackee 🦄" \
+      description="This Docker image serves as an environment for running Android builds on Gitlab CI in Ackee workspace"
+
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y \
