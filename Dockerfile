@@ -96,4 +96,23 @@ RUN git clone https://github.com/danger/kotlin.git _danger-kotlin && \
 # setup environment variables
 ENV PATH=$PATH:/usr/local/kotlinc/bin
 
+# flutter
+ENV FLUTTER_CHANNEL="stable"
+ENV FLUTTER_VERSION="2.2.1"
+ENV FLUTTER_URL="https://storage.googleapis.com/flutter_infra/releases/$FLUTTER_CHANNEL/linux/flutter_linux_$FLUTTER_VERSION-$FLUTTER_CHANNEL.tar.xz"
+ENV FLUTTER_HOME="/opt/flutter"
+
+RUN curl -o flutter.tar.xz $FLUTTER_URL \
+  && mkdir -p $FLUTTER_HOME \
+  && tar xf flutter.tar.xz -C /opt \
+  && rm flutter.tar.xz
+
+ENV PATH=$PATH:$FLUTTER_HOME/bin
+
+RUN flutter config --no-analytics \
+  && flutter precache \
+  && yes "y" | flutter doctor --android-licenses \
+  && flutter doctor \
+  && flutter update-packages
+
 VOLUME /root/.gradle

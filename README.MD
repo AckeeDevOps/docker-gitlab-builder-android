@@ -8,4 +8,5 @@ Contains:
 - Latest 8 Android version SDKs + Platform CLI tools
 - gcloud CLI tool
 - danger-kotlin 
+- Flutter 2.2.3 binaries
 
