@@ -98,7 +98,7 @@ ENV PATH=$PATH:/usr/local/kotlinc/bin
 
 # flutter
 ENV FLUTTER_CHANNEL="stable"
-ENV FLUTTER_VERSION="2.10.0"
+ENV FLUTTER_VERSION="3.0.1"
 ENV FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/$FLUTTER_CHANNEL/linux/flutter_linux_$FLUTTER_VERSION-$FLUTTER_CHANNEL.tar.xz"
 ENV FLUTTER_HOME="/opt/flutter"
 
