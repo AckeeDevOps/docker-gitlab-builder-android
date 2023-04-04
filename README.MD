@@ -7,6 +7,5 @@ Contains:
 - NVM with default node version to 12.2.0
 - Latest 8 Android version SDKs + Platform CLI tools
 - gcloud CLI tool
-- danger-kotlin 
-- Flutter 2.10.0 binaries
-
+- danger-kotlin
+- Flutter 3.7.9 binaries
