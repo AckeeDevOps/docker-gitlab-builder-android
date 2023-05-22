@@ -18,8 +18,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     source "$HOME/.sdkman/bin/sdkman-init.sh" && \
-    sdk install java 11.0.10-zulu && \
-    sdk use java 11.0.10-zulu
+    sdk install java 17.0.7-oracle && \
+    sdk use java 17.0.7-oracle
 
 ENV JAVA_HOME /root/.sdkman/candidates/java/current
 ENV ANDROID_HOME /opt/android-sdk-linux
