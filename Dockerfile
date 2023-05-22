@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 
 LABEL tag="ackee-gitlab" \
       author="Ackee 🦄" \
@@ -79,16 +79,16 @@ RUN apt-get update && apt-get install -y \
     make
 
 # install danger-js which is needed for danger-kotlin to work
-RUN npm install -g danger@10.2.1
+RUN npm install -g danger@11.2.6
 
 # install kotlin compiler
-RUN curl -o kotlin-compiler.zip -L https://github.com/JetBrains/kotlin/releases/download/v1.4.10/kotlin-compiler-1.4.10.zip && \
+RUN curl -o kotlin-compiler.zip -L https://github.com/JetBrains/kotlin/releases/download/v1.8.21/kotlin-compiler-1.8.21.zip && \
     unzip -d /usr/local/ kotlin-compiler.zip && \
     rm -rf kotlin-compiler.zip
 
 # install danger-kotlin
 RUN git clone https://github.com/danger/kotlin.git _danger-kotlin && \
-    cd _danger-kotlin && git checkout 0.7.1 && \
+    cd _danger-kotlin && git checkout 1.2.0 && \
     make install  && \
     cd ..  && \
     rm -rf _danger-kotlin
@@ -105,6 +105,7 @@ ENV FLUTTER_HOME="/opt/flutter"
 RUN curl -o flutter.tar.xz $FLUTTER_URL \
   && mkdir -p $FLUTTER_HOME \
   && tar xf flutter.tar.xz -C /opt \
+  && git config --global --add safe.directory /opt/flutter \
   && rm flutter.tar.xz
 
 ENV PATH=$PATH:$FLUTTER_HOME/bin
