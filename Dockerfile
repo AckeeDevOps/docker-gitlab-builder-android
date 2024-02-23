@@ -116,4 +116,11 @@ RUN flutter config --no-analytics \
   && flutter doctor \
   && flutter update-packages
 
+# Dependency-Check Gradle plugin
+#
+# We use this Gradle plugin https://github.com/jeremylong/DependencyCheck for checking vulnerabilities in our dependencies, but it relies
+# on env variable to determine encoding for dependency parsing, so we need to set this variable to make the task work as discussed and described more
+# here https://github.com/jeremylong/DependencyCheck/issues/1742
+ENV LC_ALL C.UTF-8
+
 VOLUME /root/.gradle
