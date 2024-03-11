@@ -58,12 +58,12 @@ ENV PATH="${PATH}:/opt/google-cloud-sdk/bin/"
 
 # nvm environment variables
 ENV NVM_DIR=/usr/local/nvm \
-    NODE_VERSION=12.2.0
+    NODE_VERSION=20.11.1
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
 RUN mkdir $NVM_DIR && \
-    curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.37.2/install.sh | bash
+    curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.7/install.sh | bash
 
 RUN source $NVM_DIR/nvm.sh && \
     nvm install $NODE_VERSION && \
@@ -79,7 +79,7 @@ RUN apt-get update && apt-get install -y \
     make
 
 # install danger-js which is needed for danger-kotlin to work
-RUN npm install -g danger@11.2.6
+RUN npm install -g danger@11.3.1
 
 # install kotlin compiler
 RUN curl -o kotlin-compiler.zip -L https://github.com/JetBrains/kotlin/releases/download/v1.8.21/kotlin-compiler-1.8.21.zip && \
