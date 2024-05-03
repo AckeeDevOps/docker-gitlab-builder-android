@@ -9,3 +9,4 @@ Contains:
 - gcloud CLI tool
 - danger-kotlin
 - Flutter 3.7.9 binaries
+- [Git LFS](https://git-lfs.com/)

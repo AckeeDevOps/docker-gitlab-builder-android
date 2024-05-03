@@ -123,4 +123,9 @@ RUN flutter config --no-analytics \
 # here https://github.com/jeremylong/DependencyCheck/issues/1742
 ENV LC_ALL C.UTF-8
 
+# git LFS support
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash \
+    && apt-get install -y git-lfs \
+    && git lfs install
+
 VOLUME /root/.gradle
