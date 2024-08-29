@@ -128,4 +128,11 @@ RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.d
     && apt-get install -y git-lfs \
     && git lfs install
 
+# add gitlab helper functions
+ENV GITLAB_CI_UTILS_VERSION 2.7.0
+RUN curl -o helper_functions.sh "https://raw.githubusercontent.com/AckeeDevOps/gitlab-ci-utils/$GITLAB_CI_UTILS_VERSION/scripts/helper_functions.sh" \
+    && curl -o android_ci_functions.sh "https://raw.githubusercontent.com/AckeeCZ/android-gitlab-ci-scripts/v1.0.0/android_ci_functions.sh" \
+    && echo "source helper_functions.sh" >> ~/.bashrc \
+    && echo "source android_ci_functions.sh" >> ~/.bashrc
+
 VOLUME /root/.gradle
