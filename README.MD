@@ -8,5 +8,5 @@ Contains:
 - Latest 8 Android version SDKs + Platform CLI tools
 - gcloud CLI tool
 - danger-kotlin
-- Flutter 3.7.9 binaries
+- Flutter 3.24.3 binaries
 - [Git LFS](https://git-lfs.com/)
