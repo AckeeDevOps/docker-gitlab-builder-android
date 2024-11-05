@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.6.0] - 2024-11-05
+### Changed
+- Update danger kotlin to 1.3.1
+- Update kotlin compiler for danger kotlin to 2.0.21
+
 ## [v2.5.0] - 2024-09-13
 ### Changed
 - Update flutter version to 3.24.3
