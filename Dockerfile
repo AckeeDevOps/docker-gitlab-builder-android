@@ -7,7 +7,7 @@ LABEL tag="ackee-gitlab" \
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update && apt-get install -y \
-     curl \
+    curl \
     git \
     libgl1-mesa-glx \
     unzip \
@@ -82,13 +82,13 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g danger@11.3.1
 
 # install kotlin compiler
-RUN curl -o kotlin-compiler.zip -L https://github.com/JetBrains/kotlin/releases/download/v1.8.21/kotlin-compiler-1.8.21.zip && \
+RUN curl -o kotlin-compiler.zip -L https://github.com/JetBrains/kotlin/releases/download/v2.0.21/kotlin-compiler-2.0.21.zip && \
     unzip -d /usr/local/ kotlin-compiler.zip && \
     rm -rf kotlin-compiler.zip
 
 # install danger-kotlin
 RUN git clone https://github.com/danger/kotlin.git _danger-kotlin && \
-    cd _danger-kotlin && git checkout 1.2.0 && \
+    cd _danger-kotlin && git checkout 1.3.1 && \
     make install  && \
     cd ..  && \
     rm -rf _danger-kotlin
