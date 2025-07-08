@@ -58,7 +58,7 @@ ENV PATH="${PATH}:/opt/google-cloud-sdk/bin/"
 
 # nvm environment variables
 ENV NVM_DIR=/usr/local/nvm \
-    NODE_VERSION=20.11.1
+    NODE_VERSION=23.5.0
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
