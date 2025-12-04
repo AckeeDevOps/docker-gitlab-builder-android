@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.8.0] - 2025-12-04
+### Changed
+- Update danger kotlin to 1.3.4
+- Update kotlin compiler for danger kotlin to 2.2.21
+- Update danger js to 12.3.4
+
+### Removed
+- Remove env variable previously added for Dependency-Check plugin
+
 ## [v2.7.0] - 2025-07-08
 ### Changed
 - Update node to 23.5.0
