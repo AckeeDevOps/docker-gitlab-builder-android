@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:trixie
 
 LABEL tag="ackee-gitlab" \
       author="Ackee 🦄" \
@@ -6,15 +6,19 @@ LABEL tag="ackee-gitlab" \
 
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     curl \
     git \
-    libgl1-mesa-glx \
+    libgl1 \
     unzip \
     zip \
-    python \
+    python3 \
     wget \
-    fontconfig
+    xz-utils \
+    fontconfig \
+    apt-transport-https \
+    ca-certificates \
+    gnupg
 
 RUN curl -s "https://get.sdkman.io" | bash && \
     source "$HOME/.sdkman/bin/sdkman-init.sh" && \
@@ -44,17 +48,11 @@ RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep platforms | awk -F' ' '{p
 # list all build-tools, sort them in descending order and install them
 RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '{print $1}' | sort -nr -k2 -t \; | uniq)
 
-# install gcloud
-RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-334.0.0-linux-x86_64.tar.gz -O g.tar.gz && \
-    tar xf g.tar.gz && \
-    rm g.tar.gz && \
-    mv google-cloud-sdk /opt/google-cloud-sdk && \
-    /opt/google-cloud-sdk/install.sh -q && \
-    /opt/google-cloud-sdk/bin/gcloud config set component_manager/disable_update_check true
-# add gcloud SDK to path
-ENV PATH="${PATH}:/opt/google-cloud-sdk/bin/"
-
-## Danger-kotlin dependencies
+# setup gcloud
+RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" >> /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor >> /etc/apt/trusted.gpg.d/cloud.google.gpg && \
+    apt-get update && apt-get install -y google-cloud-cli && \
+    gcloud config set component_manager/disable_update_check true
 
 # nvm environment variables
 ENV NVM_DIR=/usr/local/nvm \
