@@ -25,16 +25,16 @@ RUN curl -s "https://get.sdkman.io" | bash && \
     sdk install java 17.0.7-oracle && \
     sdk use java 17.0.7-oracle
 
-ENV JAVA_HOME /root/.sdkman/candidates/java/current
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH "$PATH:$JAVA_HOME/bin"
+ENV JAVA_HOME=/root/.sdkman/candidates/java/current
+ENV ANDROID_HOME=/opt/android-sdk-linux
+ENV PATH="$PATH:$JAVA_HOME/bin"
 
 # Download Android SDK command line tools into $ANDROID_HOME
 RUN cd /opt && wget -q  https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip -O android-sdk-tools.zip && \
     unzip -q android-sdk-tools.zip && mkdir -p "$ANDROID_HOME/cmdline-tools/" && mv cmdline-tools latest && mv latest/ "$ANDROID_HOME"/cmdline-tools/ && \
     rm android-sdk-tools.zip
 
-ENV PATH "$PATH:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
+ENV PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
 
 # Accept licenses before installing components
 # License is valid for all the standard components in versions installed from this file
@@ -51,7 +51,7 @@ RUN sdkmanager $(sdkmanager --list 2> /dev/null | grep build-tools | awk -F' ' '
 # setup gcloud
 RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk main" >> /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor >> /etc/apt/trusted.gpg.d/cloud.google.gpg && \
-    apt-get update && apt-get install -y google-cloud-cli && \
+    apt update && apt install -y google-cloud-cli && \
     gcloud config set component_manager/disable_update_check true
 
 # nvm environment variables
@@ -73,7 +73,7 @@ ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules \
     PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # install make which is needed in danger-kotlin install phase
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     make
 
 # install danger-js which is needed for danger-kotlin to work
@@ -99,12 +99,13 @@ ENV FLUTTER_CHANNEL="stable"
 ENV FLUTTER_VERSION="3.24.3"
 ENV FLUTTER_URL="https://storage.googleapis.com/flutter_infra_release/releases/$FLUTTER_CHANNEL/linux/flutter_linux_$FLUTTER_VERSION-$FLUTTER_CHANNEL.tar.xz"
 ENV FLUTTER_HOME="/opt/flutter"
+ENV FLUTTER_FILE="flutter.tar.xz"
 
-RUN curl -o flutter.tar.xz $FLUTTER_URL \
+RUN curl -o $FLUTTER_FILE $FLUTTER_URL \
   && mkdir -p $FLUTTER_HOME \
-  && tar xf flutter.tar.xz -C /opt \
+  && tar xf $FLUTTER_FILE -C /opt \
   && git config --global --add safe.directory /opt/flutter \
-  && rm flutter.tar.xz
+  && rm $FLUTTER_FILE
 
 ENV PATH=$PATH:$FLUTTER_HOME/bin
 
@@ -116,11 +117,11 @@ RUN flutter config --no-analytics \
 
 # git LFS support
 RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash \
-    && apt-get install -y git-lfs \
+    && apt install -y git-lfs \
     && git lfs install
 
 # add gitlab helper functions
-ENV GITLAB_CI_UTILS_VERSION 2.7.0
+ENV GITLAB_CI_UTILS_VERSION=2.7.0
 RUN curl -o helper_functions.sh "https://raw.githubusercontent.com/AckeeDevOps/gitlab-ci-utils/$GITLAB_CI_UTILS_VERSION/scripts/helper_functions.sh" \
     && curl -o android_ci_functions.sh "https://raw.githubusercontent.com/AckeeCZ/android-gitlab-ci-scripts/v1.0.0/android_ci_functions.sh" \
     && echo "source helper_functions.sh" >> /etc/profile \
