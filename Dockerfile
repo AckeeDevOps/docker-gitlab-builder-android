@@ -16,8 +16,6 @@ RUN apt update && apt install -y \
     wget \
     xz-utils \
     fontconfig \
-    apt-transport-https \
-    ca-certificates \
     gnupg
 
 RUN curl -s "https://get.sdkman.io" | bash && \
