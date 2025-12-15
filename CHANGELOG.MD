@@ -4,18 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.9.0] - 2025-12-10
-### Changed
-- Upgraded debian version to `trixie`
-- Added repository and key for Google cloud CLI
-- Fixed other non-working apt dependencies
-- Minor refactor of environment variables
-
 ## [v2.8.0] - 2025-12-04
 ### Changed
 - Update danger kotlin to 1.3.4
 - Update kotlin compiler for danger kotlin to 2.2.21
 - Update danger js to 12.3.4
+- Update debian version to `trixie`
+- Added repository and key for Google cloud CLI package
+- Fixed other non-working apt dependencies
+- Minor refactor of environment variables
 
 ### Removed
 - Remove env variable previously added for Dependency-Check plugin
