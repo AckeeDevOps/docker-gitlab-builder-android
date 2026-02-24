@@ -21,6 +21,7 @@ jobs:
         uses: ./.github/actions/login
         with:
           user-name: ${{ vars.DOCKER_HUB_TEST_USERNAME }}
+          # Test public repos read only token on a separate androidackee test account.
           token: ${{ vars.DOCKER_HUB_TEST_TOKEN }}
 
       - name: Preflight checks
