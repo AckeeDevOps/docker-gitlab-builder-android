@@ -20,8 +20,8 @@ jobs:
       - name: Login
         uses: ./.github/actions/login
         with:
-          user-name: ${{ secrets.DOCKER_HUB_USERNAME }}
-          token: ${{ secrets.DOCKER_HUB_TOKEN }}
+          user-name: ${{ vars.DOCKER_HUB_TEST_USERNAME }}
+          token: ${{ vars.DOCKER_HUB_TEST_TOKEN }}
 
       - name: Preflight checks
         uses: ./.github/actions/common-preflight-check
