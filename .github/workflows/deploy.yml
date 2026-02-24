@@ -26,4 +26,6 @@ jobs:
 
       - name: Push image
         shell: bash
+        env:
+          IMAGE_TAG: ${{ github.ref_name }}
         run: docker compose push
